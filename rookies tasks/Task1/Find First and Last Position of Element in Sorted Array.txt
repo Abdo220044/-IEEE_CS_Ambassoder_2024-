@@ -1,0 +1,57 @@
+     #include <vector>
+#include <iostream>
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+
+using namespace std;
+int left = 0, right = nums.size() - 1;
+
+    auto binarySearchLeft = [&](int target) -> int {
+        int l = left, r = right;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if (nums[mid] < target) {
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return l;
+    };
+
+
+    auto binarySearchRight = [&](int target) -> int {
+        int l = left, r = right;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if (nums[mid] <= target) {
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return r;
+    };
+
+    int first = binarySearchLeft(target);
+    int last = binarySearchRight(target);
+
+    if (first <= last && first < nums.size() && nums[first] == target && nums[last] == target) {
+        return {first, last};
+    } else {
+        return {-1, -1};
+    }
+}
+
+int main() {
+    vector<int> nums = {5, 7, 7, 8, 8, 10};
+    int target = 8;
+    vector<int> result = searchRange(nums, target);
+
+    cout << "First and last positions of " << target << " are: " << result[0] << " and " << result[1] << endl;
+
+    return 0;
+}
+
+};
