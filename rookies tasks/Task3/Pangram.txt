@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <cctype>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    string str;
+    cin >> str;
+
+    if (n < 26) {
+        cout << "NO" << endl;
+        return 0;
+    }
+
+    vector<bool> seen(26, false);
+
+    for (char c : str) {
+        if (isalpha(c)) {
+            seen[tolower(c) - 'a'] = true;
+        }
+    }
+
+    for (bool b : seen) {
+        if (!b) {
+            cout << "NO" << endl;
+            return 0;
+        }
+    }
+
+    cout << "YES" << endl;
+    return 0;
+}

@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+bool hasFullXColumn(const string& s, int a, int b) {
+    for (int col = 0; col < b; ++col) {
+        bool allX = true;
+        for (int row = 0; row < a; ++row) {
+            if (s[row * b + col] != 'X') {
+                allX = false;
+                break;
+            }
+        }
+        if (allX) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int main() {
+    int t;
+    cin >> t;
+    vector<pair<int, int>> possible_sizes = {{1, 12}, {2, 6}, {3, 4}, {4, 3}, {6, 2}, {12, 1}};
+
+    while (t--) {
+        string s;
+        cin >> s;
+
+        vector<pair<int, int>> valid_pairs;
+        
+        for (const auto& size : possible_sizes) {
+            int a = size.first;
+            int b = size.second;
+            if (hasFullXColumn(s, a, b)) {
+                valid_pairs.push_back(size);
+            }
+        }
+
+        cout << valid_pairs.size();
+        for (const auto& p : valid_pairs) {
+            cout << " " << p.first << "x" << p.second;
+        }
+        cout << endl;
+    }
+
+    return 0;
+}

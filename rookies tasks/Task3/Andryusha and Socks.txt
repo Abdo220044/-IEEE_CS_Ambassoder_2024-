@@ -1,0 +1,32 @@
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    vector<int> socks(2 * n);
+    for (int i = 0; i < 2 * n; ++i) {
+        cin >> socks[i];
+    }
+
+    unordered_set<int> table;
+    vector<bool> removed(n + 1, false);
+    int max_on_table = 0;
+
+    for (int sock : socks) {
+        if (!removed[sock]) {
+            if (table.find(sock) != table.end()) {
+                table.erase(sock);
+                removed[sock] = true;
+            } else {
+                table.insert(sock);
+            }
+            max_on_table = max(max_on_table, (int)table.size());
+        }
+    }
+
+    cout << max_on_table << endl;
+    return 0;
+}
